@@ -1,0 +1,39 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    name: bc2testing
+    namespace: eao-corp-com-dev
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: DockerImage
+        name: registry-insecure-local-registry.apps.cpassare-03306779.emeashift.support:80/int_docker_dev/cms/cp6/cms_cp6_dev_oc_ocp4_testing/cdra/cms-eir-als-svc:1.1.0
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: main
+        uri: https://github.com/cpassare/ocp-simple-webserver.git
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: httpd:latest
+          namespace: openshift
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - imageChange:
+        lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/httpd@sha256:2dc5c992783a01cd1416d1ee3f93b6e85973e447da639a5a53e0c0c75ebecf8b
+      type: ImageChange
+    - type: ConfigChange
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
