@@ -1,6 +1,6 @@
 <?php
 
-header('test-key: test-value');
+header('x-b3-traceid: 463ac35c9f6413ad48485a3953bb6124');
 
 ?>
 
